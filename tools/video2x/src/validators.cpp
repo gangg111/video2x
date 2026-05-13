@@ -16,8 +16,8 @@ void validate_anime4k_shader_name(const video2x::fsutils::StringType& shader_nam
         throw po::validation_error(
             po::validation_error::invalid_option_value,
             "libplacebo-shader",
-            "libplacebo-shader must be one of: anime4k-v4-a, anime4k-v4-a+a, anime4k-v4-b, "
-            "anime4k-v4-b+b, anime4k-v4-c, anime4k-v4-c+a, anime4k-v4.1-gan, or a valid file path"
+            "libplacebo-shader musi być jedną z wartości: anime4k-v4-a, anime4k-v4-a+a, anime4k-v4-b, "
+            "anime4k-v4-b+b, anime4k-v4-c, anime4k-v4-c+a, anime4k-v4.1-gan lub prawidłową ścieżką do pliku"
         );
     }
 }
@@ -33,7 +33,7 @@ void validate_realesrgan_model_name(const video2x::fsutils::StringType& model_na
         throw po::validation_error(
             po::validation_error::invalid_option_value,
             "realesrgan-model",
-            "realesrgan-model must be one of: realesr-animevideov3, realesrgan-plus-anime, "
+            "realesrgan-model musi być jedną z wartości: realesr-animevideov3, realesrgan-plus-anime, "
             "realesrgan-plus"
         );
     }
@@ -47,7 +47,7 @@ void validate_realcugan_model_name(const video2x::fsutils::StringType& model_nam
         throw po::validation_error(
             po::validation_error::invalid_option_value,
             "realcugan-model",
-            "realcugan-model must be one of: models-nose, models-pro, models-se"
+            "realcugan-model musi być jedną z wartości: models-nose, models-pro, models-se"
         );
     }
 }
@@ -73,7 +73,7 @@ void validate_rife_model_name(const video2x::fsutils::StringType& model_name) {
         throw po::validation_error(
             po::validation_error::invalid_option_value,
             "rife-model",
-            "RIFE model must be one of: rife, rife-HD, rife-UHD, rife-anime, rife-v2, rife-v2.3, "
+            "Model RIFE musi być jednym z: rife, rife-HD, rife-UHD, rife-anime, rife-v2, rife-v2.3, "
             "rife-v2.4, rife-v3.0, rife-v3.1, rife-v4, rife-v4.6, rife-v4.25, rife-v4.25-lite, "
             "rife-v4.26"
         );
