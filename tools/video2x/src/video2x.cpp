@@ -232,7 +232,7 @@ int main(int argc, char** argv) {
 
         // Wydrukuj podsumowanie przetwarzania
         std::cout << "====== Podsumowanie Video2X "
-                  << (arguments.benchmark ? "Testy wydajności" : "Przetwarzanie")
+                  << (arguments.benchmark ? "Test wydajności" : "Przetwarzanie")
                   << " ======" << std::endl;
         std::cout << "Przetworzony plik wideo: " << arguments.in_fname.u8string() << std::endl;
         std::cout << "Łączna liczba przetworzonych klatek: " << processed_frames << std::endl;
