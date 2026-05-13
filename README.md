@@ -1,6 +1,6 @@
 <p align="center">
    <img src="https://github.com/user-attachments/assets/5cd63373-e806-474f-94ec-6e04963bf90f"
-        alt="Video2X: A machine learning-based video super resolution and frame interpolation framework."/>
+        alt="Video2X: Framework do super rozdzielczości wideo i interpolacji klatek oparty na uczeniu maszynowym."/>
    </br>
    <img src="https://img.shields.io/github/v/release/k4yt3x/video2x?style=flat-square"/>
    <img src="https://img.shields.io/github/downloads/k4yt3x/video2x/total?style=flat-square"/>
@@ -9,53 +9,53 @@
    <img src="https://img.shields.io/badge/dynamic/json?color=%23e85b46&label=Patreon&query=data.attributes.patron_count&suffix=%20patrons&url=https%3A%2F%2Fwww.patreon.com%2Fapi%2Fcampaigns%2F4507807&style=flat-square"/>
 </p>
 
-## 🌟 Version 6.0.0
+## 🌟 Wersja 6.0.0
 
-Video2X 6.0.0 highlights:
+Najważniejsze zmiany w Video2X 6.0.0:
 
-- Complete rewrite of the Video2X project in C/C++.
-- Faster and more efficient architecture.
-- Cross-platform support for Windows and Linux.
-- Vastly improved output quality.
-- New GUI and installer for easy setup on Windows.
+- Całkowite przepisanie projektu Video2X w C/C++.
+- Szybsza i bardziej wydajna architektura.
+- Wsparcie dla wielu platform: Windows i Linux.
+- Znacznie lepsza jakość wyjściowa.
+- Nowy interfejs graficzny (GUI) i instalator dla łatwej konfiguracji w systemie Windows.
 
 <details>
-<summary>Click to see more details</summary>
+<summary>Kliknij, aby zobaczyć więcej szczegółów</summary>
 
-Version 6.0.0 is a complete rewrite of this project in C/C++. It:
+Wersja 6.0.0 to całkowite przepisanie projektu w C/C++. Ona:
 
-- genuinely works this time, with much less hassle compared to the 5.0.0 beta;
-- is blazing fast, thanks to the new optimized pipeline and the efficiency of C/C++;
-- is cross-platform, available now for both Windows and Linux;
-- offers significantly better output quality with Anime4K v4, Real-ESRGAN, Real-CUGAN, and RIFE;
-- supports two modes: filtering (upscaling) and frame interpolation;
-- supports Anime4K v4 and all custom MPV-compatible GLSL shaders;
-- supports Real-ESRGAN, Real-CUGAN, and RIFE (all models) via ncnn and Vulkan;
-- requires zero additional disk space during processing, just space for the final output.
+- naprawdę działa tym razem, z znacznie mniejszymi problemami w porównaniu do bety 5.0.0;
+- jest błyskawicznie szybka, dzięki nowemu zoptymalizowanemu potokowi przetwarzania i wydajności C/C++;
+- jest wieloplatformowa, dostępna teraz zarówno dla Windows, jak i Linux;
+- oferuje znacznie lepszą jakość wyjściową dzięki Anime4K v4, Real-ESRGAN, Real-CUGAN i RIFE;
+- obsługuje dwa tryby: filtrowanie (skalowanie w górę) i interpolację klatek;
+- obsługuje Anime4K v4 i wszystkie niestandardowe shadery GLSL zgodne z MPV;
+- obsługuje Real-ESRGAN, Real-CUGAN i RIFE (wszystkie modele) przez ncnn i Vulkan;
+- nie wymaga dodatkowego miejsca na dysku podczas przetwarzania – tylko miejsce na końcowy plik wyjściowy.
 
 </details>
 
 ![6.4.0-screenshot](https://github.com/user-attachments/assets/9b1cc8a7-2903-4d2c-80a2-8d81f007e45b)
 
-## 🖥️ Hardware Requirements
+## 🖥️ Wymagania sprzętowe
 
-Your system must meet the minimum hardware requirements below to run Video2X.
+Twój system musi spełniać poniższe minimalne wymagania sprzętowe, aby uruchomić Video2X.
 
-- **CPU**
-  - The precompiled binaries require CPUs with AVX2 support.
-  - **Intel**: Haswell (Q2 2013) or newer
-  - **AMD**: Excavator (Q2 2015) or newer
-- **GPU**
-  - The GPU must support Vulkan.
-  - **NVIDIA**: Kepler (GTX 600 series, Q2 2012) or newer
-  - **AMD**: GCN 1.0 (Radeon HD 7000 series, Q1 2012) or newer
-  - **Intel**: HD Graphics 4000 (Q2 2012) or newer
+- **Procesor (CPU)**
+  - Prekompilowane pliki binarne wymagają procesorów z obsługą AVX2.
+  - **Intel**: Haswell (Q2 2013) lub nowszy
+  - **AMD**: Excavator (Q2 2015) lub nowszy
+- **Karta graficzna (GPU)**
+  - GPU musi obsługiwać Vulkan.
+  - **NVIDIA**: Kepler (seria GTX 600, Q2 2012) lub nowszy
+  - **AMD**: GCN 1.0 (seria Radeon HD 7000, Q1 2012) lub nowszy
+  - **Intel**: HD Graphics 4000 (Q2 2012) lub nowszy
 
-## [🪟 Install on Windows](https://docs.video2x.org/installing/windows-qt6.html)
+## [🪟 Instalacja w systemie Windows](https://docs.video2x.org/installing/windows-qt6.html)
 
-**[Download the Latest Windows Installer Executable (6.4.0)](https://github.com/k4yt3x/video2x/releases/download/6.4.0/video2x-qt6-windows-amd64-installer.exe)**
+**[Pobierz najnowszy instalator dla systemu Windows (6.4.0)](https://github.com/k4yt3x/video2x/releases/download/6.4.0/video2x-qt6-windows-amd64-installer.exe)**
 
-You can download the latest Windows release on the [releases page](https://github.com/k4yt3x/video2x/releases/latest). For basic GUI usage, refer to the [documentation](https://docs.video2x.org/running/desktop.html). If you're unable to download directly from GitHub, try the [mirror site](https://files.k4yt3x.com). The GUI currently supports the following languages:
+Najnowszą wersję dla systemu Windows możesz pobrać ze [strony wydań](https://github.com/k4yt3x/video2x/releases/latest). Aby zapoznać się z podstawową obsługą interfejsu graficznego, przejdź do [dokumentacji](https://docs.video2x.org/running/desktop.html). Jeśli nie możesz pobrać bezpośrednio z GitHub, spróbuj skorzystać z [serwera lustrzanego](https://files.k4yt3x.com). Interfejs graficzny obsługuje obecnie następujące języki:
 
 - English (United States)
 - 简体中文（中国）
@@ -64,76 +64,76 @@ You can download the latest Windows release on the [releases page](https://githu
 - Français (France)
 - Deutsch (Deutschland)
 
-## [🐧 Install on Linux](https://docs.video2x.org/installing/linux.html)
+## [🐧 Instalacja w systemie Linux](https://docs.video2x.org/installing/linux.html)
 
-Video2X packages are available for the Linux distros listed below. A universal AppImage is also available for other distros. If you'd like to build it from source code, refer to the [PKGBUILD](packaging/arch/PKGBUILD) file for a general overview of the required dependencies and commands.
+Pakiety Video2X są dostępne dla dystrybucji Linuksa wymienionych poniżej. Dla innych dystrybucji dostępny jest również uniwersalny AppImage. Jeśli chcesz zbudować program ze źródeł, zapoznaj się z plikiem [PKGBUILD](packaging/arch/PKGBUILD), aby uzyskać ogólny przegląd wymaganych zależności i poleceń.
 
-- Arch Linux: AUR packages, maintained by [@K4YT3X](https://github.com/k4yt3x).
+- Arch Linux: pakiety AUR, utrzymywane przez [@K4YT3X](https://github.com/k4yt3x).
   - [aur/video2x](https://aur.archlinux.org/packages/video2x)
   - [aur/video2x-git](https://aur.archlinux.org/packages/video2x-git)
   - [aur/video2x-qt6](https://aur.archlinux.org/packages/video2x-qt6)
   - [aur/video2x-qt6-git](https://aur.archlinux.org/packages/video2x-qt6-git)
-- Arch Linux (Chinese Mainland): archlinuxcn packages, maintained by [@Integral-Tech](https://github.com/Integral-Tech).
+- Arch Linux (kontynentalne Chiny): pakiety archlinuxcn, utrzymywane przez [@Integral-Tech](https://github.com/Integral-Tech).
   - [archlinuxcn/video2x](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/video2x)
   - [archlinuxcn/video2x-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/video2x-git)
   - [archlinuxcn/video2x-qt6](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/video2x-qt6)
   - [archlinuxcn/video2x-qt6-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/video2x-qt6-git)
-- Other distros: `Video2X-x86_64.AppImage` on the [releases page](https://github.com/k4yt3x/video2x/releases/latest).
+- Inne dystrybucje: `Video2X-x86_64.AppImage` dostępny na [stronie wydań](https://github.com/k4yt3x/video2x/releases/latest).
 
-## [📦 Container Image](https://docs.video2x.org/running/container.html)
+## [📦 Obraz kontenera](https://docs.video2x.org/running/container.html)
 
-Video2X [container images](https://github.com/k4yt3x/video2x/pkgs/container/video2x) are available on the GitHub Container Registry for easy deployment on Linux and macOS. If you already have Docker/Podman installed, only one command is needed to start upscaling a video. For more information on how to use Video2X's Docker image, please refer to the [documentation](https://docs.video2x.org/running/container.html).
+[Obrazy kontenerów](https://github.com/k4yt3x/video2x/pkgs/container/video2x) Video2X są dostępne w GitHub Container Registry, co ułatwia wdrożenie na systemach Linux i macOS. Jeśli masz już zainstalowany Docker/Podman, wystarczy jedno polecenie, aby rozpocząć skalowanie wideo. Więcej informacji na temat korzystania z obrazu Docker Video2X znajdziesz w [dokumentacji](https://docs.video2x.org/running/container.html).
 
 ## [📔 Google Colab](https://colab.research.google.com/drive/1gWEwcA9y57EsxwOjmLNmNMXPsafw0kGo)
 
-You can use Video2X on [Google Colab](https://colab.research.google.com/) **for free** if you don't have a powerful GPU of your own. You can borrow a powerful GPU (NVIDIA T4, L4, or A100) on Google's server for free for a maximum of 12 hours per session. **Please use the free resource fairly** and do not create sessions back-to-back and run upscaling 24/7. This might result in you getting banned. You can get [Colab Pro/Pro+](https://colab.research.google.com/signup/pricing) if you'd like to use better GPUs and get longer runtimes. Usage instructions are embedded in the [Colab Notebook](https://colab.research.google.com/drive/1gWEwcA9y57EsxwOjmLNmNMXPsafw0kGo).
+Możesz używać Video2X na [Google Colab](https://colab.research.google.com/) **bezpłatnie**, jeśli nie posiadasz wydajnej karty graficznej. Możesz korzystać z mocnego GPU (NVIDIA T4, L4 lub A100) na serwerach Google bezpłatnie przez maksymalnie 12 godzin na sesję. **Prosimy o uczciwe korzystanie z darmowych zasobów** – nie twórz sesji jedna po drugiej i nie uruchamiaj skalowania 24/7. Może to skutkować zablokowaniem konta. Możesz wykupić [Colab Pro/Pro+](https://colab.research.google.com/signup/pricing), jeśli chcesz korzystać z lepszych GPU i dłuższych sesji. Instrukcje użytkowania są zawarte w [notatniku Colab](https://colab.research.google.com/drive/1gWEwcA9y57EsxwOjmLNmNMXPsafw0kGo).
 
-## [💬 Telegram Discussion Group](https://t.me/video2x)
+## [💬 Grupa dyskusyjna na Telegramie](https://t.me/video2x)
 
-Join our Telegram discussion group to ask any questions you have about Video2X, chat directly with the developers, or discuss super resolution, frame interpolation technologies, or the future of Video2X in general.
+Dołącz do naszej grupy dyskusyjnej na Telegramie, aby zadać pytania dotyczące Video2X, porozmawiać bezpośrednio z deweloperami lub dyskutować o technologiach super rozdzielczości, interpolacji klatek lub przyszłości Video2X.
 
-## [📖 Documentation](https://docs.video2x.org/)
+## [📖 Dokumentacja](https://docs.video2x.org/)
 
-Comprehensive documentation for Video2X is available at [https://docs.video2x.org/](https://docs.video2x.org/). It offers detailed instructions on how to [build](https://docs.video2x.org/building/index.html), [install](https://docs.video2x.org/installing/index.html), [use](https://docs.video2x.org/running/index.html), and [develop](https://docs.video2x.org/developing/index.html) with this program.
+Pełna dokumentacja Video2X jest dostępna pod adresem [https://docs.video2x.org/](https://docs.video2x.org/). Zawiera szczegółowe instrukcje dotyczące [budowania](https://docs.video2x.org/building/index.html), [instalacji](https://docs.video2x.org/installing/index.html), [użytkowania](https://docs.video2x.org/running/index.html) i [rozwijania](https://docs.video2x.org/developing/index.html) tego programu.
 
-## 📽️ Video Demos (Outdated)
+## 📽️ Dema wideo (przestarzałe)
 
 ![Spirited Away Demo](https://user-images.githubusercontent.com/21986859/49412428-65083280-f73a-11e8-8237-bb34158a545e.png)\
-_Upscale demo: Spirited Away's movie trailer_
+_Demo skalowania: zwiastun filmu „Spirited Away"_
 
 - **Spirited Away**: [YouTube](https://youtu.be/mGEfasQl2Zo) | [Bilibili](https://www.bilibili.com/video/BV1V5411471i/)
-  - 360P to 4K
-  - The [original video](https://www.youtube.com/watch?v=ByXuk9QqQkk)'s copyright belongs to 株式会社スタジオジブリ
+  - Z 360P do 4K
+  - Prawa autorskie do [oryginalnego wideo](https://www.youtube.com/watch?v=ByXuk9QqQkk) należą do 株式会社スタジオジブリ
 - **Bad Apple!!**: [YouTube](https://youtu.be/A81rW_FI3cw) | [Bilibili](https://www.bilibili.com/video/BV16K411K7ue)
-  - 384P 30 FPS to 4K 120 FPS with waifu2x and DAIN
-  - The [original video](https://www.nicovideo.jp/watch/sm8628149)'s copyright belongs to あにら
+  - Z 384P 30 FPS do 4K 120 FPS przy użyciu waifu2x i DAIN
+  - Prawa autorskie do [oryginalnego wideo](https://www.nicovideo.jp/watch/sm8628149) należą do あにら
 - **The Pet Girl of Sakurasou**: [YouTube](https://youtu.be/M0vDI1HH2_Y) | [Bilibili](https://www.bilibili.com/video/BV14k4y167KP/)
-  - 240P 29.97 to 1080P 60 FPS with waifu2x and DAIN
-  - The original video's copyright belongs to ASCII Media Works
+  - Z 240P 29.97 do 1080P 60 FPS przy użyciu waifu2x i DAIN
+  - Prawa autorskie do oryginalnego wideo należą do ASCII Media Works
 
-### Standard Test Clip
+### Standardowy klip testowy
 
-The following clip can be used to test if your setup works properly. This is also the standard clip used for running performance benchmarks.
+Poniższy klip może być użyty do sprawdzenia, czy Twoja konfiguracja działa poprawnie. Jest to również standardowy klip używany do testów wydajności.
 
-- [Standard Test Clip (240P)](https://files.k4yt3x.com/resources/videos/standard-test.mp4) 4.54 MiB
-- [Real-CUGAN Upscaled Sample (1704P)](https://files.k4yt3x.com/resources/videos/standard-realcugan.mp4) 3.5 MiB
-- [Real-ESRGAN Upscaled Sample (1704P)](https://files.k4yt3x.com/resources/videos/standard-realesrgan.mp4) 3.1 MiB
-- [waifu2x Upscaled Sample (1080P)](https://files.k4yt3x.com/resources/videos/standard-waifu2x.mp4) 4.54 MiB
-- [Ground Truth (1080P)](https://files.k4yt3x.com/resources/videos/standard-original.mp4) 22.2 MiB
+- [Standardowy klip testowy (240P)](https://files.k4yt3x.com/resources/videos/standard-test.mp4) 4,54 MiB
+- [Przykład skalowania Real-CUGAN (1704P)](https://files.k4yt3x.com/resources/videos/standard-realcugan.mp4) 3,5 MiB
+- [Przykład skalowania Real-ESRGAN (1704P)](https://files.k4yt3x.com/resources/videos/standard-realesrgan.mp4) 3,1 MiB
+- [Przykład skalowania waifu2x (1080P)](https://files.k4yt3x.com/resources/videos/standard-waifu2x.mp4) 4,54 MiB
+- [Oryginał w wysokiej rozdzielczości (1080P)](https://files.k4yt3x.com/resources/videos/standard-original.mp4) 22,2 MiB
 
-The original clip came from the anime "さくら荘のペットな彼女."\
-Copyright of this clip belongs to 株式会社アニプレックス.
+Oryginalny klip pochodzi z anime „さくら荘のペットな彼女."\
+Prawa autorskie do tego klipu należą do 株式会社アニプレックス.
 
-## ⚖️ License
+## ⚖️ Licencja
 
-This project is licensed under [GNU AGPL version 3](https://www.gnu.org/licenses/agpl-3.0.txt).\
-Copyright (C) 2018-2025 K4YT3X and [contributors](https://github.com/k4yt3x/video2x/graphs/contributors).
+Ten projekt jest licencjonowany na warunkach [GNU AGPL w wersji 3](https://www.gnu.org/licenses/agpl-3.0.txt).\
+Copyright (C) 2018-2025 K4YT3X i [współtwórcy](https://github.com/k4yt3x/video2x/graphs/contributors).
 
 ![AGPLv3](https://www.gnu.org/graphics/agplv3-155x51.png)
 
-This project includes or depends on these following projects:
+Ten projekt zawiera lub jest zależny od następujących projektów:
 
-| Project                                                                               | License         |
+| Projekt                                                                               | Licencja        |
 | ------------------------------------------------------------------------------------- | --------------- |
 | [FFmpeg/FFmpeg](https://www.ffmpeg.org/)                                              | LGPLv2.1, GPLv2 |
 | [Tencent/ncnn](https://github.com/Tencent/ncnn)                                       | BSD 3-Clause    |
@@ -142,11 +142,11 @@ This project includes or depends on these following projects:
 | [nihui/rife-ncnn-vulkan](https://github.com/nihui/rife-ncnn-vulkan)                   | MIT License     |
 | [xinntao/Real-ESRGAN-ncnn-vulkan](https://github.com/xinntao/Real-ESRGAN-ncnn-vulkan) | MIT License     |
 
-More licensing information can be found in the [NOTICE](NOTICE) file.
+Więcej informacji o licencjach można znaleźć w pliku [NOTICE](NOTICE).
 
-## 🌺 Special Thanks
+## 🌺 Podziękowania
 
-Special thanks to the following individuals for their significant contributions to the project, listed in alphabetical order.
+Szczególne podziękowania dla następujących osób za ich znaczący wkład w projekt, wymienionych w kolejności alfabetycznej.
 
 - [@ArchieMeng](https://github.com/archiemeng)
 - [@BrianPetkovsek](https://github.com/BrianPetkovsek)
