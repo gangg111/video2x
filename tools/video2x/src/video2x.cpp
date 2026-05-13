@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     if (!video2x::logger_manager::LoggerManager::instance().reconfigure_logger(
             "video2x", sinks, "[%Y-%m-%d %H:%M:%S] [%^%l%$] %v"
         )) {
-        std::cerr << "Error: Failed to configure logger." << std::endl;
+        std::cerr << "Błąd: Nie udało się skonfigurować rejestratora." << std::endl;
         return 1;
     }
 
@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
         proc_ret = video_processor.process(arguments.in_fname, arguments.out_fname);
         completed.store(true, std::memory_order_relaxed);
     });
-    video2x::logger()->info("Press [space] to pause/resume, [q] to abort.");
+    video2x::logger()->info("Naciśnij [spację] aby wstrzymać/wznowić, [q] aby przerwać.");
 
     // Setup timer
     Timer timer;
@@ -134,11 +134,11 @@ int main(int argc, char** argv) {
                 // Print message based on current state and pause/resume the timer
                 if (video_processor.get_state() == video2x::VideoProcessorState::Paused) {
                     std::cout
-                        << "\r\033[KProcessing paused; press [space] to resume, [q] to abort.";
+                        << "\r\033[KPrzetwarzanie wstrzymane; naciśnij [spację] aby wznowić, [q] aby przerwać.";
                     std::cout.flush();
                     timer.pause();
                 } else {
-                    std::cout << "\r\033[KProcessing resumed.";
+                    std::cout << "\r\033[KPrzetwarzanie wznowione.";
                     std::cout.flush();
                     timer.resume();
                 }
@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
             }
         } else if (ch == 'q' || ch == 'Q') {
             // Abort processing
-            video2x::logger()->warn("Aborting gracefully; press Ctrl+C to terminate forcefully.");
+            video2x::logger()->warn("Łagodne przerywanie; naciśnij Ctrl+C aby wymusić zakończenie.");
             video_processor.abort();
             break;
         }
@@ -182,13 +182,13 @@ int main(int argc, char** argv) {
                     calculate_time_components(time_remaining);
 
                 // Print the progress bar
-                std::cout << "\r\033[Kframe=" << processed_frames << "/" << total_frames << " ("
+                std::cout << "\r\033[Kklatka=" << processed_frames << "/" << total_frames << " ("
                           << std::fixed << std::setprecision(2) << percentage
                           << "%); fps=" << std::fixed << std::setprecision(2) << processing_rate
-                          << "; elapsed=" << std::setw(2) << std::setfill('0') << hours_elapsed
+                          << "; upłynęło=" << std::setw(2) << std::setfill('0') << hours_elapsed
                           << ":" << std::setw(2) << std::setfill('0') << minutes_elapsed << ":"
                           << std::setw(2) << std::setfill('0') << seconds_elapsed
-                          << "; remaining=" << std::setw(2) << std::setfill('0') << hours_remaining
+                          << "; pozostało=" << std::setw(2) << std::setfill('0') << hours_remaining
                           << ":" << std::setw(2) << std::setfill('0') << minutes_remaining << ":"
                           << std::setw(2) << std::setfill('0') << seconds_remaining;
                 std::cout.flush();
@@ -210,14 +210,14 @@ int main(int argc, char** argv) {
 
     // Print final message based on processing result
     if (video_processor.get_state() == video2x::VideoProcessorState::Aborted) {
-        video2x::logger()->warn("Video processing aborted");
+        video2x::logger()->warn("Przetwarzanie wideo przerwane");
         return 2;
     } else if (proc_ret != 0 ||
                video_processor.get_state() == video2x::VideoProcessorState::Failed) {
-        video2x::logger()->critical("Video processing failed with error code {}", proc_ret);
+        video2x::logger()->critical("Przetwarzanie wideo nie powiodło się z kodem błędu {}", proc_ret);
         return 1;
     } else {
-        video2x::logger()->info("Video processed successfully");
+        video2x::logger()->info("Wideo przetworzone pomyślnie");
     }
 
     // Print the processing summary if the log level is info or lower
@@ -230,20 +230,21 @@ int main(int argc, char** argv) {
         float average_speed_fps = static_cast<float>(processed_frames) /
                                   (time_elapsed > 0 ? static_cast<float>(time_elapsed) : 1);
 
-        // Print processing summary
-        std::cout << "====== Video2X " << (arguments.benchmark ? "Benchmark" : "Processing")
-                  << " summary ======" << std::endl;
-        std::cout << "Video file processed: " << arguments.in_fname.u8string() << std::endl;
-        std::cout << "Total frames processed: " << processed_frames << std::endl;
-        std::cout << "Total time taken: " << std::setw(2) << std::setfill('0') << hours_elapsed
+        // Wydrukuj podsumowanie przetwarzania
+        std::cout << "====== Podsumowanie Video2X "
+                  << (arguments.benchmark ? "Test wydajności" : "Przetwarzanie")
+                  << " ======" << std::endl;
+        std::cout << "Przetworzony plik wideo: " << arguments.in_fname.u8string() << std::endl;
+        std::cout << "Łączna liczba przetworzonych klatek: " << processed_frames << std::endl;
+        std::cout << "Łączny czas: " << std::setw(2) << std::setfill('0') << hours_elapsed
                   << ":" << std::setw(2) << std::setfill('0') << minutes_elapsed << ":"
                   << std::setw(2) << std::setfill('0') << seconds_elapsed << std::endl;
-        std::cout << "Average processing speed: " << std::fixed << std::setprecision(2)
+        std::cout << "Średnia szybkość przetwarzania: " << std::fixed << std::setprecision(2)
                   << average_speed_fps << " FPS" << std::endl;
 
-        // Print additional information if not in benchmark mode
+        // Wydrukuj dodatkowe informacje, jeśli nie jesteśmy w trybie testów wydajności
         if (!arguments.benchmark) {
-            std::cout << "Output written to: " << arguments.out_fname.u8string() << std::endl;
+            std::cout << "Wynik zapisany do: " << arguments.out_fname.u8string() << std::endl;
         }
     }
 

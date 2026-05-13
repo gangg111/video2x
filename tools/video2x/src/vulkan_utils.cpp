@@ -12,16 +12,16 @@ static int enumerate_vulkan_devices(VkInstance* instance, std::vector<VkPhysical
 
     VkResult result = vkCreateInstance(&create_info, nullptr, instance);
     if (result != VK_SUCCESS) {
-        video2x::logger()->error("Failed to create Vulkan instance.");
+        video2x::logger()->error("Nie udało się utworzyć instancji Vulkan.");
         return -1;
     }
 
-    // Enumerate physical devices
+    // Wylicz urządzenia fizyczne
     uint32_t device_count = 0;
     result = vkEnumeratePhysicalDevices(*instance, &device_count, nullptr);
     if (result != VK_SUCCESS || device_count == 0) {
         video2x::logger()->error(
-            "Failed to enumerate Vulkan physical devices or no devices available."
+            "Nie udało się wyliczyć urządzeń fizycznych Vulkan lub brak dostępnych urządzeń."
         );
         vkDestroyInstance(*instance, nullptr);
         return -1;
@@ -30,7 +30,7 @@ static int enumerate_vulkan_devices(VkInstance* instance, std::vector<VkPhysical
     devices.resize(device_count);
     result = vkEnumeratePhysicalDevices(*instance, &device_count, devices.data());
     if (result != VK_SUCCESS) {
-        video2x::logger()->error("Failed to retrieve Vulkan physical devices.");
+        video2x::logger()->error("Nie udało się pobrać urządzeń fizycznych Vulkan.");
         vkDestroyInstance(*instance, nullptr);
         return -1;
     }
@@ -54,40 +54,40 @@ int list_vulkan_devices() {
         VkPhysicalDeviceProperties device_properties;
         vkGetPhysicalDeviceProperties(device, &device_properties);
 
-        // Print Vulkan device ID and name
+        // Wydrukuj ID i nazwę urządzenia Vulkan
         std::cout << i << ". " << device_properties.deviceName << std::endl;
-        std::cout << "\tType: ";
+        std::cout << "\tTyp: ";
         switch (device_properties.deviceType) {
             case VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU:
-                std::cout << "Integrated GPU";
+                std::cout << "Zintegrowany GPU";
                 break;
             case VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU:
-                std::cout << "Discrete GPU";
+                std::cout << "Dedykowany GPU";
                 break;
             case VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU:
-                std::cout << "Virtual GPU";
+                std::cout << "Wirtualny GPU";
                 break;
             case VK_PHYSICAL_DEVICE_TYPE_CPU:
                 std::cout << "CPU";
                 break;
             default:
-                std::cout << "Unknown";
+                std::cout << "Nieznany";
                 break;
         }
         std::cout << std::endl;
 
-        // Print Vulkan API version
-        std::cout << "\tVulkan API Version: " << VK_VERSION_MAJOR(device_properties.apiVersion)
+        // Wydrukuj wersję API Vulkan
+        std::cout << "\tWersja API Vulkan: " << VK_VERSION_MAJOR(device_properties.apiVersion)
                   << "." << VK_VERSION_MINOR(device_properties.apiVersion) << "."
                   << VK_VERSION_PATCH(device_properties.apiVersion) << std::endl;
 
-        // Print driver version
-        std::cout << "\tDriver Version: " << VK_VERSION_MAJOR(device_properties.driverVersion)
+        // Wydrukuj wersję sterownika
+        std::cout << "\tWersja sterownika: " << VK_VERSION_MAJOR(device_properties.driverVersion)
                   << "." << VK_VERSION_MINOR(device_properties.driverVersion) << "."
                   << VK_VERSION_PATCH(device_properties.driverVersion) << std::endl;
 
-        // Print device ID
-        std::cout << "\tDevice ID: " << std::hex << std::showbase << device_properties.deviceID
+        // Wydrukuj ID urządzenia
+        std::cout << "\tID urządzenia: " << std::hex << std::showbase << device_properties.deviceID
                   << std::dec << std::endl;
     }
 
@@ -98,7 +98,7 @@ int list_vulkan_devices() {
 
 int get_vulkan_device_prop(uint32_t vk_device_index, VkPhysicalDeviceProperties* dev_props) {
     if (dev_props == nullptr) {
-        video2x::logger()->error("Invalid device properties pointer.");
+        video2x::logger()->error("Nieprawidłowy wskaźnik właściwości urządzenia.");
         return -1;
     }
 

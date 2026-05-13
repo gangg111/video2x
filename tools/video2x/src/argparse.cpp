@@ -64,130 +64,130 @@ int parse_args(
 ) {
     try {
         // clang-format off
-        po::options_description all_opts("General options");
+        po::options_description all_opts("Opcje ogólne");
         all_opts.add_options()
-            ("help", "Display this help page")
-            ("version,V", "Print program version and exit")
+            ("help", "Wyświetl tę stronę pomocy")
+            ("version,V", "Wydrukuj wersję programu i wyjdź")
             ("log-level", PO_STR_VALUE<video2x::fsutils::StringType>()
                 ->default_value(STR("info"), "info"),
-                "Set verbosity level (trace, debug, info, warn, error, critical, none)")
+                "Ustaw poziom szczegółowości (trace, debug, info, warn, error, critical, none)")
             ("no-progress", po::bool_switch(&arguments.no_progress),
-                "Do not display the progress bar")
-            ("list-devices,l", "List the available Vulkan devices (GPUs)")
+                "Nie wyświetlaj paska postępu")
+            ("list-devices,l", "Wyświetl dostępne urządzenia Vulkan (GPU)")
 
-            // General Processing Options
+            // Ogólne opcje przetwarzania
             ("input,i", PO_STR_VALUE<video2x::fsutils::StringType>()->required(),
-                "Input video file path")
+                "Ścieżka do wejściowego pliku wideo")
             ("output,o", PO_STR_VALUE<video2x::fsutils::StringType>()->required(),
-                "Output video file path")
+                "Ścieżka do wyjściowego pliku wideo")
             ("processor,p", PO_STR_VALUE<video2x::fsutils::StringType>()->required(),
-                "Processor to use (libplacebo, realesrgan, realcugan, rife)")
+                "Procesor do użycia (libplacebo, realesrgan, realcugan, rife)")
             ("hwaccel,a", PO_STR_VALUE<video2x::fsutils::StringType>()
-                ->default_value(STR("none"), "none"), "Hardware acceleration method (decoding)")
+                ->default_value(STR("none"), "none"), "Metoda akceleracji sprzętowej (dekodowanie)")
             ("device,d", po::value<uint32_t>(&arguments.vk_device_index)->default_value(0),
-                "Vulkan device index (GPU ID)")
+                "Indeks urządzenia Vulkan (ID GPU)")
             ("benchmark,b", po::bool_switch(&arguments.benchmark),
-                "Discard processed frames and calculate average FPS; "
-                "useful for detecting encoder bottlenecks")
+                "Odrzucaj przetworzone klatki i obliczaj średnie FPS; "
+                "przydatne do wykrywania wąskich gardeł kodera")
         ;
 
-        po::options_description encoder_opts("Encoder options");
+        po::options_description encoder_opts("Opcje kodera");
         encoder_opts.add_options()
             ("codec,c", PO_STR_VALUE<video2x::fsutils::StringType>()
-                ->default_value(STR("libx264"), "libx264"), "Output codec")
-            ("no-recalculate-pts", "Do not recalculate presentation timestamps")
-            ("no-copy-audio-streams", "Do not copy audio streams")
-            ("no-copy-subtitle-streams", "Do not copy subtitle streams")
-            ("pix-fmt", PO_STR_VALUE<video2x::fsutils::StringType>(), "Output pixel format")
+                ->default_value(STR("libx264"), "libx264"), "Kodek wyjściowy")
+            ("no-recalculate-pts", "Nie przeliczaj znaczników czasu prezentacji")
+            ("no-copy-audio-streams", "Nie kopiuj strumieni audio")
+            ("no-copy-subtitle-streams", "Nie kopiuj strumieni napisów")
+            ("pix-fmt", PO_STR_VALUE<video2x::fsutils::StringType>(), "Format pikseli wyjściowych")
             ("bit-rate", po::value<int64_t>(&enc_cfg.bit_rate)->default_value(0),
-                "Bitrate in bits per second")
+                "Szybkość transmisji w bitach na sekundę")
             ("rc-buffer-size", po::value<int>(&enc_cfg.rc_buffer_size)->default_value(0),
-                "Rate control buffer size in bits")
+                "Rozmiar bufora kontroli przepływności w bitach")
             ("rc-min-rate", po::value<int>(&enc_cfg.rc_min_rate)->default_value(0),
-                "Minimum rate control")
+                "Minimalna kontrola przepływności")
             ("rc-max-rate", po::value<int>(&enc_cfg.rc_max_rate)->default_value(0),
-                "Maximum rate control")
-            ("qmin", po::value<int>(&enc_cfg.qmin)->default_value(-1), "Minimum quantizer")
-            ("qmax", po::value<int>(&enc_cfg.qmax)->default_value(-1), "Maximum quantizer")
+                "Maksymalna kontrola przepływności")
+            ("qmin", po::value<int>(&enc_cfg.qmin)->default_value(-1), "Minimalny kwantyzator")
+            ("qmax", po::value<int>(&enc_cfg.qmax)->default_value(-1), "Maksymalny kwantyzator")
             ("gop-size", po::value<int>(&enc_cfg.gop_size)->default_value(-1),
-                "Group of pictures structure size")
+                "Rozmiar grupy obrazów")
             ("max-b-frames", po::value<int>(&enc_cfg.max_b_frames)->default_value(-1),
-                "Maximum number of B-frames")
+                "Maksymalna liczba klatek B")
             ("keyint-min", po::value<int>(&enc_cfg.keyint_min)->default_value(-1),
-                "Minimum interval between keyframes")
+                "Minimalny odstęp między klatkami kluczowymi")
             ("refs", po::value<int>(&enc_cfg.refs)->default_value(-1),
-                "Number of reference frames")
+                "Liczba klatek referencyjnych")
             ("thread-count", po::value<int>(&enc_cfg.thread_count)->default_value(0),
-                "Number of threads for encoding")
+                "Liczba wątków do kodowania")
             ("delay", po::value<int>(&enc_cfg.delay)->default_value(0),
-                "Delay in milliseconds for encoder")
+                "Opóźnienie w milisekundach dla kodera")
 
-            // Extra encoder options (key-value pairs)
+            // Dodatkowe opcje kodera (pary klucz-wartość)
             ("extra-encoder-option,e", PO_STR_VALUE<std::vector<video2x::fsutils::StringType>>()
-                ->multitoken(), "Additional AVOption(s) for the encoder (format: -e key=value)")
+                ->multitoken(), "Dodatkowe opcje AVOption dla kodera (format: -e klucz=wartość)")
         ;
 
-        po::options_description upscale_opts("Upscaling options");
+        po::options_description upscale_opts("Opcje powiększania");
         upscale_opts.add_options()
             ("width,w", po::value<int>(&proc_cfg.width)
-                ->notifier([](int v) { validate_greater_equal_one(v, "width"); }), "Output width")
+                ->notifier([](int v) { validate_greater_equal_one(v, "width"); }), "Szerokość wyjściowa")
             ("height,h", po::value<int>(&proc_cfg.height)
-                ->notifier([](int v) { validate_greater_equal_one(v, "height"); }), "Output height")
+                ->notifier([](int v) { validate_greater_equal_one(v, "height"); }), "Wysokość wyjściowa")
             ("scaling-factor,s", po::value<int>(&proc_cfg.scaling_factor)
-                ->notifier([](int v) { validate_min(v, "scaling-factor", 2); }), "Scaling factor")
+                ->notifier([](int v) { validate_min(v, "scaling-factor", 2); }), "Współczynnik skalowania")
             ("noise-level,n", po::value<int>(&proc_cfg.noise_level)
-                ->notifier([](int v) { validate_min(v, "noise-level", -1); }), "Noise level")
+                ->notifier([](int v) { validate_min(v, "noise-level", -1); }), "Poziom szumu")
         ;
 
-        po::options_description interp_opts("Frame interpolation options");
+        po::options_description interp_opts("Opcje interpolacji klatek");
         interp_opts.add_options()
             ("frame-rate-mul,m", po::value<int>(&proc_cfg.frm_rate_mul)
                 ->notifier([](int v) { validate_min(v, "frame-rate-mul", 2); }),
-                "Frame rate multiplier")
+                "Mnożnik liczby klatek na sekundę")
             ("scene-thresh,t", po::value<float>(&proc_cfg.scn_det_thresh)->default_value(100.0f)
                 ->notifier([](float v) { validate_range<float>(v, "scene-thresh", 0.0, 100.0); }),
-                "Scene detection threshold (20 means 20% diff between frames is a scene change)")
+                "Próg wykrywania scen (20 oznacza 20% różnicy między klatkami jako zmiana sceny)")
         ;
 
-        po::options_description libplacebo_opts("libplacebo options");
+        po::options_description libplacebo_opts("Opcje libplacebo");
         libplacebo_opts.add_options()
             ("libplacebo-shader", PO_STR_VALUE<video2x::fsutils::StringType>()
                 ->default_value(STR("anime4k-v4-a"), "anime4k-v4-a")
                 ->notifier(validate_anime4k_shader_name),
-                "Name/path of the GLSL shader file to use (built-in: anime4k-v4-a, anime4k-v4-a+a, "
+                "Nazwa/ścieżka pliku shadera GLSL do użycia (wbudowane: anime4k-v4-a, anime4k-v4-a+a, "
                 "anime4k-v4-b, anime4k-v4-b+b, anime4k-v4-c, anime4k-v4-c+a, anime4k-v4.1-gan)")
         ;
 
-        po::options_description realesrgan_opts("Real-ESRGAN options");
+        po::options_description realesrgan_opts("Opcje Real-ESRGAN");
         realesrgan_opts.add_options()
             ("realesrgan-model", PO_STR_VALUE<video2x::fsutils::StringType>()
                 ->default_value(STR("realesr-animevideov3"), "realesr-animevideov3")
                 ->notifier(validate_realesrgan_model_name),
-                "Name of the Real-ESRGAN model to use (realesr-animevideov3, "
+                "Nazwa modelu Real-ESRGAN do użycia (realesr-animevideov3, "
                 "realesrgan-plus-anime, realesrgan-plus, realesr-generalv3)")
         ;
 
-        po::options_description realcugan_opts("Real-CUGAN options");
+        po::options_description realcugan_opts("Opcje Real-CUGAN");
         realcugan_opts.add_options()
             ("realcugan-model", PO_STR_VALUE<video2x::fsutils::StringType>()
                 ->default_value(STR("models-se"), "models-se")
                 ->notifier(validate_realcugan_model_name),
-                "Name of the Real-CUGAN model to use (models-nose, models-pro, models-se)")
+                "Nazwa modelu Real-CUGAN do użycia (models-nose, models-pro, models-se)")
             ("realcugan-threads", po::value<int>()->default_value(1),
-                "Number of threads to use for Real-CUGAN")
+                "Liczba wątków do użycia dla Real-CUGAN")
             ("realcugan-syncgap", po::value<int>()->default_value(3),
-                "Sync gap mode; 0:no sync, 1: accurate sync: 2 = rough sync, 3: very rough sync")
+                "Tryb synchronizacji; 0: bez synchronizacji, 1: dokładna, 2: przybliżona, 3: bardzo przybliżona")
         ;
 
-        po::options_description rife_opts("RIFE options");
+        po::options_description rife_opts("Opcje RIFE");
         rife_opts.add_options()
             ("rife-model", PO_STR_VALUE<video2x::fsutils::StringType>()
                 ->default_value(STR("rife-v4.26"), "rife-v4.26")
                 ->notifier(validate_rife_model_name),
-                "Name of the RIFE model to use (rife, rife-HD, rife-UHD, rife-anime, rife-v2, "
+                "Nazwa modelu RIFE do użycia (rife, rife-HD, rife-UHD, rife-anime, rife-v2, "
                 "rife-v2.3, rife-v2.4, rife-v3.0, rife-v3.1, rife-v4, rife-v4.6, rife-v4.25, "
                 "rife-v4.25-lite, rife-v4.26)")
-            ("rife-uhd", "Enable Ultra HD mode")
+            ("rife-uhd", "Włącz tryb Ultra HD")
         ;
         // clang-format on
 
@@ -210,18 +210,18 @@ int parse_args(
         if (vm.count("help") || argc == 1) {
             std::cout
                 << all_opts << std::endl
-                << "Examples:" << std::endl
-                << "  Upscale an anime video to 4K using libplacebo:" << std::endl
+                << "Przykłady:" << std::endl
+                << "  Powiększ wideo anime do 4K za pomocą libplacebo:" << std::endl
                 << "    video2x -i input.mp4 -o output.mp4 -w 3840 -h 2160 \\" << std::endl
                 << "      -p libplacebo --libplacebo-shader anime4k-v4-a+a" << std::endl
                 << std::endl
-                << "  Upscale a film by 4x using Real-ESRGAN with custom encoder options:"
+                << "  Powiększ film 4x za pomocą Real-ESRGAN z niestandardowymi opcjami kodera:"
                 << std::endl
                 << "    video2x -i input.mkv -o output.mkv -s 4 \\" << std::endl
                 << "      -p realesrgan --realesrgan-model realesrgan-plus \\" << std::endl
                 << "      -c libx264rgb -e crf=17 -e preset=veryslow -e tune=film" << std::endl
                 << std::endl
-                << "  Frame-interpolate a video using RIFE to 4x the original frame rate:"
+                << "  Interpoluj klatki wideo za pomocą RIFE do 4x oryginalnej liczby klatek:"
                 << std::endl
                 << "    video2x -i input.mp4 -o output.mp4 -m 4 -p rife --rife-model rife-v4.6"
                 << std::endl;
@@ -229,7 +229,7 @@ int parse_args(
         }
 
         if (vm.count("version")) {
-            std::cout << "Video2X version " << LIBVIDEO2X_VERSION_STRING << std::endl;
+            std::cout << "Video2X wersja " << LIBVIDEO2X_VERSION_STRING << std::endl;
             return 1;
         }
 
@@ -247,24 +247,24 @@ int parse_args(
             if (!video2x::logger_manager::LoggerManager::instance().set_log_level(
                     wstring_to_u8string(vm["log-level"].as<video2x::fsutils::StringType>())
                 )) {
-                video2x::logger()->critical("Invalid log level specified.");
+                video2x::logger()->critical("Podano nieprawidłowy poziom dziennika.");
                 return -1;
             }
         }
         video2x::logger_manager::LoggerManager::instance().hook_ffmpeg_logging();
 
-        // Print program banner
-        video2x::logger()->info("Video2X version {}", LIBVIDEO2X_VERSION_STRING);
-        // video2x::logger()->info("Copyright (C) 2018-2024 K4YT3X and contributors.");
-        // video2x::logger()->info("Licensed under GNU AGPL version 3.");
+        // Wydrukuj baner programu
+        video2x::logger()->info("Video2X wersja {}", LIBVIDEO2X_VERSION_STRING);
+        // video2x::logger()->info("Copyright (C) 2018-2024 K4YT3X i współpracownicy.");
+        // video2x::logger()->info("Licencjonowane na warunkach GNU AGPL w wersji 3.");
 
-        // Assign positional arguments
+        // Przypisz argumenty pozycyjne
         if (vm.count("input")) {
             arguments.in_fname =
                 std::filesystem::path(vm["input"].as<video2x::fsutils::StringType>());
-            video2x::logger()->info("Processing file: {}", arguments.in_fname.u8string());
+            video2x::logger()->info("Przetwarzanie pliku: {}", arguments.in_fname.u8string());
         } else {
-            video2x::logger()->critical("Input file path is required.");
+            video2x::logger()->critical("Ścieżka do pliku wejściowego jest wymagana.");
             return -1;
         }
 
@@ -272,11 +272,11 @@ int parse_args(
             arguments.out_fname =
                 std::filesystem::path(vm["output"].as<video2x::fsutils::StringType>());
         } else if (!arguments.benchmark) {
-            video2x::logger()->critical("Output file path is required.");
+            video2x::logger()->critical("Ścieżka do pliku wyjściowego jest wymagana.");
             return -1;
         }
 
-        // Parse processor type
+        // Parsuj typ procesora
         if (vm.count("processor")) {
             video2x::fsutils::StringType processor_type_str =
                 vm["processor"].as<video2x::fsutils::StringType>();
@@ -289,15 +289,15 @@ int parse_args(
             } else if (processor_type_str == STR("rife")) {
                 proc_cfg.processor_type = video2x::processors::ProcessorType::RIFE;
             } else {
-                video2x::logger()->critical("Invalid processor specified.");
+                video2x::logger()->critical("Podano nieprawidłowy procesor.");
                 return -1;
             }
         } else {
-            video2x::logger()->critical("Processor type is required.");
+            video2x::logger()->critical("Typ procesora jest wymagany.");
             return -1;
         }
 
-        // Parse hardware acceleration method
+        // Parsuj metodę akceleracji sprzętowej
         arguments.hw_device_type = AV_HWDEVICE_TYPE_NONE;
         if (vm.count("hwaccel")) {
             video2x::fsutils::StringType hwaccel_str =
@@ -307,20 +307,20 @@ int parse_args(
                     av_hwdevice_find_type_by_name(wstring_to_u8string(hwaccel_str).c_str());
                 if (arguments.hw_device_type == AV_HWDEVICE_TYPE_NONE) {
                     video2x::logger()->critical(
-                        "Invalid hardware device type '{}'.", wstring_to_u8string(hwaccel_str)
+                        "Nieprawidłowy typ urządzenia sprzętowego '{}'.", wstring_to_u8string(hwaccel_str)
                     );
                     return -1;
                 }
             }
         }
 
-        // Parse codec to AVCodec
+        // Parsuj kodek do AVCodec
         enc_cfg.codec = "libx264";
         if (vm.count("codec")) {
             std::string codec_str =
                 wstring_to_u8string(vm["codec"].as<video2x::fsutils::StringType>());
             if (avcodec_find_encoder_by_name(codec_str.c_str()) == nullptr) {
-                video2x::logger()->critical("Invalid encoder '{}'.", codec_str);
+                video2x::logger()->critical("Nieprawidłowy koder '{}'.", codec_str);
                 return -1;
             }
             enc_cfg.codec = codec_str;
@@ -331,7 +331,7 @@ int parse_args(
         enc_cfg.copy_audio_streams = vm.count("no-copy-audio-streams") == 0;
         enc_cfg.copy_subtitle_streams = vm.count("no-copy-subtitle-streams") == 0;
 
-        // Parse pixel format to AVPixelFormat
+        // Parsuj format pikseli do AVPixelFormat
         enc_cfg.pix_fmt = AV_PIX_FMT_NONE;
         if (vm.count("pix-fmt")) {
             video2x::fsutils::StringType pix_fmt_str =
@@ -340,14 +340,14 @@ int parse_args(
                 enc_cfg.pix_fmt = av_get_pix_fmt(wstring_to_u8string(pix_fmt_str).c_str());
                 if (enc_cfg.pix_fmt == AV_PIX_FMT_NONE) {
                     video2x::logger()->critical(
-                        "Invalid pixel format '{}'.", wstring_to_u8string(pix_fmt_str)
+                        "Nieprawidłowy format pikseli '{}'.", wstring_to_u8string(pix_fmt_str)
                     );
                     return -1;
                 }
             }
         }
 
-        // Parse extra AVOptions
+        // Parsuj dodatkowe opcje AVOptions
         if (vm.count("extra-encoder-option")) {
             for (const auto& opt :
                  vm["extra-encoder-option"].as<std::vector<video2x::fsutils::StringType>>()) {
@@ -360,23 +360,23 @@ int parse_args(
                     );
                 } else {
                     video2x::logger()->critical(
-                        "Invalid extra AVOption format: {}", wstring_to_u8string(opt)
+                        "Nieprawidłowy format opcji AVOption: {}", wstring_to_u8string(opt)
                     );
                     return -1;
                 }
             }
         }
 
-        // Parse processor-specific configurations
+        // Parsuj konfiguracje specyficzne dla procesora
         switch (proc_cfg.processor_type) {
             case video2x::processors::ProcessorType::Libplacebo: {
                 if (!vm.count("libplacebo-shader")) {
-                    video2x::logger()->critical("Shader name/path must be set for libplacebo.");
+                    video2x::logger()->critical("Nazwa/ścieżka shadera musi być ustawiona dla libplacebo.");
                     return -1;
                 }
                 if (proc_cfg.width <= 0 || proc_cfg.height <= 0) {
                     video2x::logger()->critical(
-                        "Output width and height must be set for libplacebo."
+                        "Szerokość i wysokość wyjściowa muszą być ustawione dla libplacebo."
                     );
                     return -1;
                 }
@@ -390,17 +390,17 @@ int parse_args(
             }
             case video2x::processors::ProcessorType::RealESRGAN: {
                 if (!vm.count("realesrgan-model")) {
-                    video2x::logger()->critical("The model name must be set for Real-ESRGAN.");
+                    video2x::logger()->critical("Nazwa modelu musi być ustawiona dla Real-ESRGAN.");
                     return -1;
                 }
                 if (proc_cfg.scaling_factor < 2 || proc_cfg.scaling_factor > 4) {
                     video2x::logger()->critical(
-                        "Scaling factor must be set to 2, 3, or 4 for Real-ESRGAN."
+                        "Współczynnik skalowania musi być ustawiony na 2, 3 lub 4 dla Real-ESRGAN."
                     );
                     return -1;
                 }
                 if (proc_cfg.noise_level < -1 || proc_cfg.noise_level > 1) {
-                    video2x::logger()->critical("Noise level must be 0 or 1 for Real-ESRGAN.");
+                    video2x::logger()->critical("Poziom szumu musi wynosić 0 lub 1 dla Real-ESRGAN.");
                     return -1;
                 }
 
@@ -414,31 +414,31 @@ int parse_args(
             }
             case video2x::processors::ProcessorType::RealCUGAN: {
                 if (!vm.count("realcugan-model")) {
-                    video2x::logger()->critical("The model name must be set for Real-CUGAN.");
+                    video2x::logger()->critical("Nazwa modelu musi być ustawiona dla Real-CUGAN.");
                     return -1;
                 }
                 if (vm.count("realcugan-threads") && vm["realcugan-threads"].as<int>() < 1) {
                     video2x::logger()->critical(
-                        "Number of threads must be at least 1 for Real-CUGAN."
+                        "Liczba wątków musi wynosić co najmniej 1 dla Real-CUGAN."
                     );
                     return -1;
                 }
                 if (vm.count("realcugan-syncgap") && (vm["realcugan-syncgap"].as<int>() < 0 ||
                                                       vm["realcugan-syncgap"].as<int>() > 3)) {
                     video2x::logger()->critical(
-                        "Sync gap mode must be set to 0, 1, 2, or 3 for Real-CUGAN."
+                        "Tryb synchronizacji musi być ustawiony na 0, 1, 2 lub 3 dla Real-CUGAN."
                     );
                     return -1;
                 }
                 if (proc_cfg.scaling_factor < 2 || proc_cfg.scaling_factor > 4) {
                     video2x::logger()->critical(
-                        "Scaling factor must be set to 2, 3, or 4 for Real-CUGAN."
+                        "Współczynnik skalowania musi być ustawiony na 2, 3 lub 4 dla Real-CUGAN."
                     );
                     return -1;
                 }
                 if (proc_cfg.noise_level < -1 || proc_cfg.noise_level > 3) {
                     video2x::logger()->critical(
-                        "Noise level must be set to -1, 0, 1, 2, or 3 for Real-CUGAN."
+                        "Poziom szumu musi być ustawiony na -1, 0, 1, 2 lub 3 dla Real-CUGAN."
                     );
                     return -1;
                 }
@@ -455,12 +455,12 @@ int parse_args(
             }
             case video2x::processors::ProcessorType::RIFE: {
                 if (!vm.count("rife-model")) {
-                    video2x::logger()->critical("The model name must be set for RIFE.");
+                    video2x::logger()->critical("Nazwa modelu musi być ustawiona dla RIFE.");
                     return -1;
                 }
                 if (proc_cfg.frm_rate_mul < 2) {
                     video2x::logger()->critical(
-                        "Frame rate multiplier must be set to at least 2 for RIFE."
+                        "Mnożnik liczby klatek musi być ustawiony na co najmniej 2 dla RIFE."
                     );
                     return -1;
                 }
@@ -476,37 +476,37 @@ int parse_args(
                 break;
             }
             default:
-                video2x::logger()->critical("Invalid processor type.");
+                video2x::logger()->critical("Nieprawidłowy typ procesora.");
                 return -1;
         }
     } catch (const po::error& e) {
-        video2x::logger()->critical("Error parsing arguments: {}", e.what());
+        video2x::logger()->critical("Błąd podczas analizowania argumentów: {}", e.what());
         return -1;
     } catch (const std::exception& e) {
         video2x::logger()->critical(
-            "Unexpected exception caught while parsing options: {}", e.what()
+            "Nieoczekiwany wyjątek podczas analizowania opcji: {}", e.what()
         );
         return -1;
     }
 
-    // Validate Vulkan device ID
+    // Waliduj identyfikator urządzenia Vulkan
     VkPhysicalDeviceProperties dev_props;
     int get_vulkan_dev_ret = get_vulkan_device_prop(arguments.vk_device_index, &dev_props);
     if (get_vulkan_dev_ret != 0) {
         if (get_vulkan_dev_ret == -2) {
-            video2x::logger()->critical("Invalid Vulkan device ID specified.");
+            video2x::logger()->critical("Podano nieprawidłowy identyfikator urządzenia Vulkan.");
             return -1;
         } else {
-            video2x::logger()->warn("Unable to validate Vulkan device ID.");
+            video2x::logger()->warn("Nie można zweryfikować identyfikatora urządzenia Vulkan.");
             return -1;
         }
     } else {
-        // Warn if the selected device is a CPU
+        // Ostrzeż, jeśli wybrane urządzenie jest procesorem CPU
         video2x::logger()->info(
-            "Using Vulkan device: {} ({:#x})", dev_props.deviceName, dev_props.deviceID
+            "Używane urządzenie Vulkan: {} ({:#x})", dev_props.deviceName, dev_props.deviceID
         );
         if (dev_props.deviceType == VK_PHYSICAL_DEVICE_TYPE_CPU) {
-            video2x::logger()->warn("The selected Vulkan device is a CPU device.");
+            video2x::logger()->warn("Wybrane urządzenie Vulkan jest urządzeniem CPU.");
         }
     }
     return 0;
